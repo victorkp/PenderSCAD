@@ -9,9 +9,11 @@ public abstract class ScadObject {
 	private static final String GENERIC_SCAD = 
 		"translation([%s,%s,%s]) {\n" + 
 		"\trotation([%s,%s,%s]) {\n" +
-		"\t\t%s" + 
-		"\t}" + 
-		"}";
+		"\t\t%s\n" + 
+		"\t}\n" + 
+		"}\n";
+
+	private boolean mCenter = false;
 
 	private double mTranslationX;
 	private double mTranslationY;
@@ -21,6 +23,14 @@ public abstract class ScadObject {
 	private double mRotationY;
 	private double mRotationZ;
 
+	public void setCentered(boolean centered) {
+		mCenter = centered;
+	}
+
+	public boolean isCentered() {
+		return mCenter;
+	}
+
 	public void setTranslation(double x, double y, double z) {
 		mTranslationX = x;
 		mTranslationY = y;
@@ -29,6 +39,14 @@ public abstract class ScadObject {
 
 	public double[] getTranslation() {
 		return new double[]{mTranslationX, mTranslationY, mTranslationZ};
+	}
+
+	public void setTranslation(double[] translation) {
+		if(translation.length != 3){
+			throw new IllegalArgumentException("Translation array must be three doubles");
+		}
+
+		setTranslation(translation[0], translation[1], translation[2]);
 	}
 
 	public void setTranslationX(double x) {
@@ -61,6 +79,14 @@ public abstract class ScadObject {
 		mRotationZ = z;
 	}
 
+	public void setRotation(double[] rotation) {
+		if(rotation.length != 3){
+			throw new IllegalArgumentException("Rotation array must be three doubles");
+		}
+
+		setRotation(rotation[0], rotation[1], rotation[2]);
+	}
+
 	public double[] getRotation() {
 		return new double[]{mRotationX, mRotationY, mRotationZ};
 	}
@@ -89,14 +115,24 @@ public abstract class ScadObject {
 		return mRotationZ;
 	}
 
+	/**
+	 * Get this ScadObject's object dependent code
+	 * Example: cube(size[1,2,3], center=true);
+	 */
 	public abstract String getObjectScad();
 
+	/**
+	 * Construct and return a copy of this ScadObject
+	 */
+	public abstract ScadObject copy();
+
+	/**
+	 * Translate this ScadObject into proper OpenSCAD code
+	 */
 	public String toScad() {
 		return String.format(Locale.ENGLISH, GENERIC_SCAD,
 			       	"" + mTranslationX, "" + mTranslationY, "" + mTranslationZ,
 				"" + mRotationX, "" + mRotationY, "" + mRotationZ, getObjectScad());
-					
 	}
-
 
 }
