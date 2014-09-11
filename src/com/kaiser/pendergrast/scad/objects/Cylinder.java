@@ -5,7 +5,7 @@ package com.kaiser.pendergrast.scad.objects;
  */
 public class Cylinder extends ScadObject{
 
-	private static final String SPHERE_SCAD = "sphere(r=%s, center=%s);";
+	private static final String SPHERE_SCAD = "cylinder(r1=%s, r2=%s, h=%s, center=%s);";
 
 	private double mRadius1;
 	private double mRadius2;
@@ -38,7 +38,7 @@ public class Cylinder extends ScadObject{
 	}
 
 	/**
-	 * Construct a Cylider with two different radii and a height
+	 * Construct a Cylinder with two different radii and a height
 	 * (note: one radius of 0 will produce a cone)
 	 */
 	public Cylinder(double radius1, double radius2, double height) {
@@ -48,8 +48,33 @@ public class Cylinder extends ScadObject{
 		mHeight = height;
 	}
 
+	public void setRadius1(double radius) {
+		mRadius1 = radius;
+	}
+
+	public void setRadius2(double radius) {
+		mRadius2 = radius;
+	}
+
+	public void setHeight(double height) {
+		mHeight = height;
+	}
+
+	public double getRadius1() {
+		return mRadius1;
+	}
+
+	public double getRadius2() {
+		return mRadius2;
+	}
+
+	public double getHeight() {
+		return mHeight;
+	}
+
+
 	/**
-	 * Construct a Cylider with two different radii, height,
+	 * Construct a Cylinder with two different radii, height,
 	 * and specify if if is centered
 	 * (note: one radius of 0 will produce a cone)
 	 */
@@ -68,7 +93,7 @@ public class Cylinder extends ScadObject{
 	}
 
 	/**
-	 * Return a copy of this Cylider object
+	 * Return a copy of this Cylinder object
 	 */
 	@Override
 	public ScadObject copy() { 

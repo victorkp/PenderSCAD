@@ -7,10 +7,20 @@ import com.kaiser.pendergrast.scad.util.Debug;
 public abstract class ScadObject {
 
 	private static final String GENERIC_SCAD = 
-		"translation([%s,%s,%s]) {\n" + 
+		"translate([%s,%s,%s]) {\n" + 
 		"\trotation([%s,%s,%s]) {\n" +
 		"\t\t%s\n" + 
 		"\t}\n" + 
+		"}\n";
+
+	private static final String NO_TRANSLATION_SCAD = 
+		"rotation([%s,%s,%s]) {\n" +
+		"\t%s\n" + 
+		"}\n";
+
+	private static final String NO_ROTATION_SCAD = 
+		"translate([%s,%s,%s]) {\n" +
+		"\t%s\n" + 
 		"}\n";
 
 	private boolean mCenter = false;
@@ -116,6 +126,20 @@ public abstract class ScadObject {
 	}
 
 	/**
+	 * @return if this ScadObject has a non-zero translation
+	 */
+	public boolean hasTranslation() {
+		return (mTranslationX != 0 || mTranslationY != 0 || mTranslationZ != 0);
+	}
+
+	/**
+	 * @return if this ScadObject has a non-zero rotation 
+	 */
+	public boolean hasRotation() {
+		return (mRotationX != 0 || mRotationY != 0 || mRotationZ != 0);
+	}
+
+	/**
 	 * Get this ScadObject's object dependent code
 	 * Example: cube(size[1,2,3], center=true);
 	 */
@@ -130,9 +154,27 @@ public abstract class ScadObject {
 	 * Translate this ScadObject into proper OpenSCAD code
 	 */
 	public String toScad() {
-		return String.format(Locale.ENGLISH, GENERIC_SCAD,
-			       	"" + mTranslationX, "" + mTranslationY, "" + mTranslationZ,
-				"" + mRotationX, "" + mRotationY, "" + mRotationZ, getObjectScad());
+		boolean hasTranslation = hasTranslation();
+		boolean hasRotation = hasRotation();
+
+		if(hasTranslation && hasRotation) {
+			return String.format(Locale.ENGLISH, GENERIC_SCAD,
+					"" + mTranslationX, "" + mTranslationY, "" + mTranslationZ,
+					"" + mRotationX, "" + mRotationY, "" + mRotationZ, getObjectScad());
+		} else if (hasTranslation) {
+			return String.format(Locale.ENGLISH, NO_ROTATION_SCAD,
+					"" + mTranslationX, "" + mTranslationY, "" + mTranslationZ, getObjectScad());
+		} else if (hasRotation) {
+			return String.format(Locale.ENGLISH, NO_TRANSLATION_SCAD,
+					"" + mRotationX, "" + mRotationY, "" + mRotationZ, getObjectScad());
+		} else {
+			return getObjectScad() + "\n";
+		}
+	}
+
+	@Override
+	public String toString() {
+		return toScad();
 	}
 
 }
