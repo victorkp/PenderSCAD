@@ -31,6 +31,16 @@ public class Operations {
 						"%s\n" + 
 						"}";
 
+	private static final String MINKOWSKI_SCAD = 
+						"minkowski() {\n" +
+						"%s\n" + 
+						"}";
+
+	private static final String HULL_SCAD = 
+						"hull() {\n" +
+						"%s\n" + 
+						"}";
+
 	private static Assembly doOperation(String operationScad, ScadObject... objects) {
 		String objectScad = "";
 		for(ScadObject object : objects) {
@@ -134,16 +144,25 @@ public class Operations {
 	}
 
 	/**
-	 * The ScadObjects will be rotated by the specified amount
+	 * Performs a minkowski operation of the minkowskiObject
+	 * on the object given
 	 */
-	public static Assembly rotation(double rotationX, double rotationY, double rotationZ, ScadObject... objects) {
-		return doOperation(String.format(ROTATION_SCAD, "" + rotationX, "" + rotationY, "" + rotationZ), objects);
+	public static Assembly minkowski(ScadObject object, ScadObject minkowskiObject) {
+		return doOperation(MINKOWSKI_SCAD, object, minkowskiObject);
+	}
+
+
+	/**
+	 * The ScadObjects will be hulled
+	 */
+	public static Assembly hull(ScadObject... objects) {
+		return doOperation(HULL_SCAD, objects);
 	}
 
 	/**
-	 * The ScadObjects will be rotated by the specified amount
+	 * The ScadObjects will be hulled
 	 */
-	public static Assembly rotation(double rotationX, doubleRotationY, double rotationZ, List<ScadObject> objects) {
-		return rotation(rotationX, rotationY, rotationZ, (ScadObject[]) objects.toArray());
+	public static Assembly rotation(List<ScadObject> objects) {
+		return hull((ScadObject[]) objects.toArray());
 	}
 }
