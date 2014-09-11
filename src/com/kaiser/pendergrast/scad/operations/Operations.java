@@ -41,6 +41,11 @@ public class Operations {
 						"%s\n" + 
 						"}";
 
+	private static final String SCAlE_SCAD = 
+						"scale(v = [%s, %s, %s]) {\n" +
+						"%s\n" + 
+						"}";
+
 	private static Assembly doOperation(String operationScad, ScadObject... objects) {
 		String objectScad = "";
 		for(ScadObject object : objects) {
@@ -144,13 +149,26 @@ public class Operations {
 	}
 
 	/**
+	 * The ScadObjects will be rotated by the specified amount
+	 */
+	public static Assembly scale(double scaleX, double scaleY, double scaleZ, ScadObject... objects) {
+		return doOperation(String.format(SCALE_SCAD, "" + scaleX, "" + scaleY, "" + scaleZ), objects);
+	}
+
+	/**
+	 * The ScadObjects will be rotated by the specified amount
+	 */
+	public static Assembly scale(double scaleX, doublescaleY, double scaleZ, List<ScadObject> objects) {
+		return scale(scaleX, scaleY, scaleZ, (ScadObject[]) objects.toArray());
+	}
+
+	/**
 	 * Performs a minkowski operation of the minkowskiObject
 	 * on the object given
 	 */
 	public static Assembly minkowski(ScadObject object, ScadObject minkowskiObject) {
 		return doOperation(MINKOWSKI_SCAD, object, minkowskiObject);
 	}
-
 
 	/**
 	 * The ScadObjects will be hulled
