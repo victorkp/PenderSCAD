@@ -41,7 +41,7 @@ public class Operations {
 						"%s\n" + 
 						"}";
 
-	private static final String SCAlE_SCAD = 
+	private static final String SCALE_SCAD = 
 						"scale(v = [%s, %s, %s]) {\n" +
 						"%s\n" + 
 						"}";
@@ -144,7 +144,7 @@ public class Operations {
 	/**
 	 * The ScadObjects will be rotated by the specified amount
 	 */
-	public static Assembly rotation(double rotationX, doubleRotationY, double rotationZ, List<ScadObject> objects) {
+	public static Assembly rotation(double rotationX, double rotationY, double rotationZ, List<ScadObject> objects) {
 		return rotation(rotationX, rotationY, rotationZ, (ScadObject[]) objects.toArray());
 	}
 
@@ -158,7 +158,7 @@ public class Operations {
 	/**
 	 * The ScadObjects will be rotated by the specified amount
 	 */
-	public static Assembly scale(double scaleX, doublescaleY, double scaleZ, List<ScadObject> objects) {
+	public static Assembly scale(double scaleX, double scaleY, double scaleZ, List<ScadObject> objects) {
 		return scale(scaleX, scaleY, scaleZ, (ScadObject[]) objects.toArray());
 	}
 
