@@ -8,13 +8,13 @@ public abstract class ScadObject {
 
 	private static final String GENERIC_SCAD = 
 		"translate([%s,%s,%s]) {\n" + 
-		"\trotation([%s,%s,%s]) {\n" +
+		"\trotate([%s,%s,%s]) {\n" +
 		"\t\t%s\n" + 
 		"\t}\n" + 
 		"}\n";
 
 	private static final String NO_TRANSLATION_SCAD = 
-		"rotation([%s,%s,%s]) {\n" +
+		"rotate([%s,%s,%s]) {\n" +
 		"\t%s\n" + 
 		"}\n";
 
@@ -41,10 +41,11 @@ public abstract class ScadObject {
 		return mCenter;
 	}
 
-	public void setTranslation(double x, double y, double z) {
+	public ScadObject setTranslation(double x, double y, double z) {
 		mTranslationX = x;
 		mTranslationY = y;
 		mTranslationZ = z;
+		return this;
 	}
 
 	public double[] getTranslation() {
@@ -59,16 +60,19 @@ public abstract class ScadObject {
 		setTranslation(translation[0], translation[1], translation[2]);
 	}
 
-	public void setTranslationX(double x) {
+	public ScadObject setTranslationX(double x) {
 		mTranslationX = x;
+		return this;
 	}
 
-	public void setTranslationY(double x) {
-		mTranslationY = x;
+	public ScadObject setTranslationY(double y) {
+		mTranslationY = y;
+		return this;
 	}
 
-	public void setTranslationZ(double x) {
-		mTranslationZ = x;
+	public ScadObject setTranslationZ(double z) {
+		mTranslationZ = z;
+		return this;
 	}
 
 	public double getTranslationX() {
@@ -83,34 +87,39 @@ public abstract class ScadObject {
 		return mTranslationZ;
 	}
 
-	public void setRotation(double x, double y, double z) {
+	public ScadObject setRotation(double x, double y, double z) {
 		mRotationX = x;
 		mRotationY = y;
 		mRotationZ = z;
+		return this;
 	}
 
-	public void setRotation(double[] rotation) {
+	public ScadObject setRotation(double[] rotation) {
 		if(rotation.length != 3){
 			throw new IllegalArgumentException("Rotation array must be three doubles");
 		}
 
 		setRotation(rotation[0], rotation[1], rotation[2]);
+		return this;
 	}
 
 	public double[] getRotation() {
 		return new double[]{mRotationX, mRotationY, mRotationZ};
 	}
 
-	public void setRotationX(double x) {
+	public ScadObject setRotationX(double x) {
 		mRotationX = x;
+		return this;
 	}
 
-	public void setRotationY(double x) {
-		mRotationY = x;
+	public ScadObject setRotationY(double y) {
+		mRotationY = y;
+		return this;
 	}
 
-	public void setRotationZ(double x) {
-		mRotationZ = x;
+	public ScadObject setRotationZ(double z) {
+		mRotationZ = z;
+		return this;
 	}
 
 	public double getRotationX() {

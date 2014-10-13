@@ -45,6 +45,11 @@ public class Operations {
 						"scale(v = [%s, %s, %s]) {\n" +
 						"%s\n" + 
 						"}";
+	
+	private static final String MIRROR_SCAD = 
+			"mirror([%s, %s, %s]) {\n" +
+			"%s\n" + 
+			"}";
 
 	private static Assembly doOperation(String operationScad, ScadObject... objects) {
 		String objectScad = "";
@@ -75,15 +80,6 @@ public class Operations {
 	 */
 	public static Assembly difference(List<ScadObject> objects) {
 		return Operations.difference((ScadObject[]) objects.toArray());
-	}
-
-	/**
-	 * Find the difference of the ScadObjects
-	 * The first ScadObject will have the intersections of the
-	 * second ScadObject removed
-	 */
-	public static Assembly difference(ScadObject object1, ScadObject object2) {
-		return Operations.difference(object1, object2);
 	}
 
 	/**
@@ -182,5 +178,26 @@ public class Operations {
 	 */
 	public static Assembly rotation(List<ScadObject> objects) {
 		return hull((ScadObject[]) objects.toArray());
+	}
+	
+	/**
+	 * Mirror the ScadObject over the X axis
+	 */
+	public static Assembly mirrorX(ScadObject object) {
+		return new Assembly(String.format(MIRROR_SCAD, 1, 0, 0, object.toScad()));
+	}
+	
+	/**
+	 * Mirror the ScadObject over the Y axis
+	 */
+	public static Assembly mirrorY(ScadObject object) {
+		return new Assembly(String.format(MIRROR_SCAD, 0, 1, 0, object.toScad()));
+	}
+	
+	/**
+	 * Mirror the ScadObject over the Z axis
+	 */
+	public static Assembly mirrorZ(ScadObject object) {
+		return new Assembly(String.format(MIRROR_SCAD, 0, 0, 1, object.toScad()));
 	}
 }
