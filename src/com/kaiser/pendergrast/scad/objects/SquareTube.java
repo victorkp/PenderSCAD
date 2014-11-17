@@ -33,7 +33,7 @@ public class SquareTube extends ScadObject{
 	}
 
 	/**
-	 * Construct a SquareTube with inner and outer radii, and a length
+	 * Construct a SquareTube with outer width, wall thickness, and a length
 	 */
 	public SquareTube(double tubeWidth, double wallThickness, double length) {
 		super();
@@ -43,7 +43,7 @@ public class SquareTube extends ScadObject{
 	}
 
 	/**
-	 * Construct a SquareTube with inner and outer radii, length,
+	 * Construct a SquareTube with outer width, wall thickness, length,
 	 * and specify if if is centered
 	 */
 	public SquareTube(double tubeWidth, double wallThickness, double length, boolean center) {

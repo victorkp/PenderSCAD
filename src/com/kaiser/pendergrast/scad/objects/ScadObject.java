@@ -41,6 +41,28 @@ public abstract class ScadObject {
 		return mCenter;
 	}
 
+	public ScadObject translate(double x, double y, double z) {
+		mTranslationX += x;
+		mTranslationY += y;
+		mTranslationZ += z;
+		return this;
+	}
+
+	public ScadObject translateX(double x) {
+		mTranslationX += x;
+		return this;
+	}
+
+	public ScadObject translateY(double y) {
+		mTranslationY += y;
+		return this;
+	}
+
+	public ScadObject translateZ(double z) {
+		mTranslationZ += z;
+		return this;
+	}
+
 	public ScadObject setTranslation(double x, double y, double z) {
 		mTranslationX = x;
 		mTranslationY = y;
